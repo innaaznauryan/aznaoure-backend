@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.data.product_seed import PRODUCTS_SEED
@@ -21,11 +22,13 @@ def create_tables():
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],
+    allow_origins=["http://localhost:8080"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+app.mount("/media", StaticFiles(directory="media"), name="media")
 
 app.include_router(auth.router, prefix="/api/auth", tags=["Auth"])
 app.include_router(products.router, prefix="/api/products", tags=["Products"])

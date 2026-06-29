@@ -7,7 +7,7 @@ PRODUCTS_SEED = [
         },
         "price": 46000,
         "category": "rings",
-        "image": "product-ring-gyumri.webp",
+        "image": "images/product-ring-gyumri.webp",
         "description": {
             "en": "Inspired by Armenian postmodernist architecture and famous Fountains of Gyumri.",
             "hy": "Ոգեշնչված է հայկական պոստմոդեռնիստական ճարտարապետությունից և Գյումրու հայտնի շատրվաններից։",
@@ -26,7 +26,7 @@ PRODUCTS_SEED = [
         },
         "price": 14000,
         "category": "necklaces",
-        "image": "product-necklace-shoe.webp",
+        "image": "images/product-necklace-shoe.webp",
         "description": {
             "en": "A 5500-year-old leather shoe discovered in the Birds' Cave in the Vayots Dzor region, transformed into a pendant.",
             "hy": "Վայոց ձորի մարզի Թռչունների քարանձավում հայտնաբերված 5500-ամյա կաշվե ոտնամանը՝ որպես կախազարդ։",
@@ -45,7 +45,7 @@ PRODUCTS_SEED = [
         },
         "price": 27000,
         "category": "rings",
-        "image": "product-ring-aznaoure.webp",
+        "image": "images/product-ring-aznaoure.webp",
         "description": {
             "en": 'Inspired by a lightbulb symbolizing the moment a creative idea sparks. Engraved with "Ad Lucem" - "to the light" - it reflects the journey from thought to illumination.',
             "hy": "Ոգեշնչված է ստեղծագործ մտքի ծնունդը խորհրդանշող լամպից։ «Ad Lucem» («դեպի լույս») փորագրությունը արտացոլում է մտքից դեպի լուսավորություն տանող ուղին։",
@@ -65,7 +65,7 @@ PRODUCTS_SEED = [
         },
         "price": 36000,
         "category": "earrings",
-        "image": "product-earrings-manuscripts-big.webp",
+        "image": "images/product-earrings-manuscripts-big.webp",
         "description": {
             "en": "Inspired by Mikhail Bulgakov's timeless words: 'Manuscripts don't burn'. It reminds us that even if words are erased or pages disappear, the meaning behind them continues to live.",
             "hy": "Ոգեշնչված է Միխայիլ Բուլգակովի անմահ խոսքերից՝ «Ձեռագրերը չեն այրվում»։ Այն հիշեցնում է, որ նույնիսկ եթե բառերը ջնջվեն կամ էջերն անհետանան, նրանց ասելիքն անմահ է։",
@@ -84,7 +84,7 @@ PRODUCTS_SEED = [
         },
         "price": 30000,
         "category": "rings",
-        "image": "product-ring-armentel.webp",
+        "image": "images/product-ring-armentel.webp",
         "description": {
             "en": "Inspired by Armenian postmodernist architecture and famous Connection Building.",
             "hy": "Ոգեշնչված է հայկական պոստմոդեռնիստական ճարտարապետությունից և հայտնի Կապի շենքից։",
@@ -103,7 +103,7 @@ PRODUCTS_SEED = [
         },
         "price": 42000,
         "category": "rings",
-        "image": "product-ring-armentel-globe.webp",
+        "image": "images/product-ring-armentel-globe.webp",
         "description": {
             "en": "Inspired by Armenian postmodernist architecture and famous Connection Building.",
             "hy": "Ոգեշնչված է հայկական պոստմոդեռնիստական ճարտարապետությունից և հայտնի Կապի շենքից։",
@@ -122,7 +122,7 @@ PRODUCTS_SEED = [
         },
         "price": 10000,
         "category": "earrings",
-        "image": "product-earrings-armentel.webp",
+        "image": "images/product-earrings-armentel.webp",
         "description": {
             "en": "Inspired by Armenian postmodernist architecture and famous Connection Building.",
             "hy": "Ոգեշնչված է հայկական պոստմոդեռնիստական ճարտարապետությունից և հայտնի Կապի շենքից։",
@@ -141,7 +141,7 @@ PRODUCTS_SEED = [
         },
         "price": 30000,
         "category": "earrings",
-        "image": "product-earrings-armentel-globe.webp",
+        "image": "images/product-earrings-armentel-globe.webp",
         "description": {
             "en": "Inspired by Armenian postmodernist architecture and famous Connection Building.",
             "hy": "Ոգեշնչված է հայկական պոստմոդեռնիստական ճարտարապետությունից և հայտնի Կապի շենքից։",
@@ -160,7 +160,7 @@ PRODUCTS_SEED = [
         },
         "price": 42000,
         "category": "necklaces",
-        "image": "product-necklace-3apples.webp",
+        "image": "images/product-necklace-3apples.webp",
         "description": {
             "en": "Inspired by Armenian fairy-tales. And three apples fell from the sky: one for the teller, one for the listener, and one for the one who understands the meaning.",
             "hy": "Ոգեշնչված է հայկական հեքիաթներից։ Երկնքից ընկավ երեք խնձոր․ մեկը՝ ասողին, մեկը՝ լսողին, մեկն էլ՝ ականջ դնողին։",
@@ -180,7 +180,7 @@ PRODUCTS_SEED = [
         },
         "price": 30000,
         "category": "earrings",
-        "image": "product-earrings-dilijan.webp",
+        "image": "images/product-earrings-dilijan.webp",
         "description": {
             "en": "Inspired by Armenian postmodernist architecture and Five Pillars of Dilijan Monument",
             "hy": "Ոգեշնչված է հայկական պոստմոդեռնիստական ճարտարապետությունից և Դիլիջանի «Հինգ սյուներ» հայտնի հուշարձանից։",
@@ -200,7 +200,7 @@ PRODUCTS_SEED = [
         },
         "price": 46000,
         "category": "earrings",
-        "image": "product-earrings-gyumri.webp",
+        "image": "images/product-earrings-gyumri.webp",
         "description": {
             "en": "Inspired by Armenian postmodernist architecture and famous Fountains of Gyumri.",
             "hy": "Ոգեշնչված է հայկական պոստմոդեռնիստական ճարտարապետությունից և Գյումրու հայտնի շատրվաններից։",
@@ -220,7 +220,7 @@ PRODUCTS_SEED = [
         },
         "price": 42000,
         "category": "necklaces",
-        "image": "product-necklace-melancholy.webp",
+        "image": "images/product-necklace-melancholy.webp",
         "description": {
             "en": "Inspired by Albrecht Dürer's artwork Melencolia I, with a magic square where all sums are equal - a perfect balance of art and logic.",
             "hy": "Ոգեշնչված է Ալբրեխտ Դյուրերի «Melencolia I» ստեղծագործությունից՝ մոգական քառակուսիով, որտեղ բոլոր ուղղություններով թվերի գումարները հավասար են իրար։ Արվեստի և տրամաբանության կատարյալ հավասարակշռություն։",
@@ -240,7 +240,7 @@ PRODUCTS_SEED = [
         },
         "price": 25000,
         "category": "rings",
-        "image": "product-ring-manuscripts.webp",
+        "image": "images/product-ring-manuscripts.webp",
         "description": {
             "en": "Inspired by Mikhail Bulgakov's timeless words: 'Manuscripts don't burn'. It reminds us that even if words are erased or pages disappear, the meaning behind them continues to live.",
             "hy": "Ոգեշնչված է Միխայիլ Բուլգակովի անմահ խոսքերից՝ «Ձեռագրերը չեն այրվում»։ Այն հիշեցնում է, որ նույնիսկ եթե բառերը ջնջվեն կամ էջերն անհետանան, նրանց ասելիքն անմահ է։",
@@ -259,7 +259,7 @@ PRODUCTS_SEED = [
         },
         "price": 17000,
         "category": "bracelets",
-        "image": "product-bracelet-manuscripts.webp",
+        "image": "images/product-bracelet-manuscripts.webp",
         "description": {
             "en": "Inspired by Mikhail Bulgakov's timeless words: 'Manuscripts don't burn'. It reminds us that even if words are erased or pages disappear, the meaning behind them continues to live.",
             "hy": "Ոգեշնչված է Միխայիլ Բուլգակովի անմահ խոսքերից՝ «Ձեռագրերը չեն այրվում»։ Այն հիշեցնում է, որ նույնիսկ եթե բառերը ջնջվեն կամ էջերն անհետանան, նրանց ասելիքն անմահ է։",
@@ -278,7 +278,7 @@ PRODUCTS_SEED = [
         },
         "price": 28000,
         "category": "brooches",
-        "image": "product-brooch-manuscripts.webp",
+        "image": "images/product-brooch-manuscripts.webp",
         "description": {
             "en": "Inspired by Mikhail Bulgakov's timeless words: 'Manuscripts don't burn'. It reminds us that even if words are erased or pages disappear, the meaning behind them continues to live.",
             "hy": "Ոգեշնչված է Միխայիլ Բուլգակովի անմահ խոսքերից՝ «Ձեռագրերը չեն այրվում»։ Այն հիշեցնում է, որ նույնիսկ եթե բառերը ջնջվեն կամ էջերն անհետանան, նրանց ասելիքն անմահ է։",
@@ -297,7 +297,7 @@ PRODUCTS_SEED = [
         },
         "price": 19000,
         "category": "earrings",
-        "image": "product-earrings-manuscripts.webp",
+        "image": "images/product-earrings-manuscripts.webp",
         "description": {
             "en": "Inspired by Mikhail Bulgakov's timeless words: 'Manuscripts don't burn'. It reminds us that even if words are erased or pages disappear, the meaning behind them continues to live.",
             "hy": "Ոգեշնչված է Միխայիլ Բուլգակովի անմահ խոսքերից՝ «Ձեռագրերը չեն այրվում»։ Այն հիշեցնում է, որ նույնիսկ եթե բառերը ջնջվեն կամ էջերն անհետանան, նրանց ասելիքն անմահ է։",
@@ -316,7 +316,7 @@ PRODUCTS_SEED = [
         },
         "price": 28000,
         "category": "necklaces",
-        "image": "product-necklace-manuscripts.webp",
+        "image": "images/product-necklace-manuscripts.webp",
         "description": {
             "en": "Inspired by Mikhail Bulgakov's timeless words: 'Manuscripts don't burn'. It reminds us that even if words are erased or pages disappear, the meaning behind them continues to live.",
             "hy": "Ոգեշնչված է Միխայիլ Բուլգակովի անմահ խոսքերից՝ «Ձեռագրերը չեն այրվում»։ Այն հիշեցնում է, որ նույնիսկ եթե բառերը ջնջվեն կամ էջերն անհետանան, նրանց ասելիքն անմահ է։",
@@ -335,7 +335,7 @@ PRODUCTS_SEED = [
         },
         "price": 14000,
         "category": "necklaces",
-        "image": "product-necklace-manuscripts-small.webp",
+        "image": "images/product-necklace-manuscripts-small.webp",
         "description": {
             "en": "Inspired by Mikhail Bulgakov's timeless words: 'Manuscripts don't burn'. It reminds us that even if words are erased or pages disappear, the meaning behind them continues to live.",
             "hy": "Ոգեշնչված է Միխայիլ Բուլգակովի անմահ խոսքերից՝ «Ձեռագրերը չեն այրվում»։ Այն հիշեցնում է, որ նույնիսկ եթե բառերը ջնջվեն կամ էջերն անհետանան, նրանց ասելիքն անմահ է։",
