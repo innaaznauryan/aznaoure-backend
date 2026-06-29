@@ -1,3 +1,6 @@
+import os
+from contextlib import asynccontextmanager
+
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
@@ -8,21 +11,22 @@ from app.models import Order, OrderItem, Product  # noqa: F401
 from app.repositories.product_repository import ProductRepository
 from app.routers import auth, orders, products, addresses
 
-app = FastAPI(title="Jewelry Shop API", version="1.0.0")
-
-
-@app.on_event("startup")
-def create_tables():
-    Base.metadata.create_all(bind=engine)
+@asynccontextmanager
+async def lifespan(_app: FastAPI):
     db = SessionLocal()
     try:
         ProductRepository(db).seed_if_empty(PRODUCTS_SEED)
     finally:
         db.close()
+    yield
+
+app = FastAPI(title="Jewelry Shop API", version="1.0.0", lifespan=lifespan)
+
+origins = os.getenv("ALLOWED_ORIGINS", "http://localhost:8080").split(",")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:8080"],
+    allow_origins=origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
