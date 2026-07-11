@@ -4,6 +4,8 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.exceptions import RequestValidationError
+from fastapi.responses import JSONResponse
 
 from app.data.product_seed import PRODUCTS_SEED
 from app.database import Base, SessionLocal, engine
@@ -31,6 +33,17 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# --- Global exception handler for Pydantic validation errors ---
+@app.exception_handler(RequestValidationError)
+async def validation_exception_handler(request, exc: RequestValidationError):
+    first_error = exc.errors()[0]
+    code = first_error.get("msg", "validation_error")
+    code = code.replace("Value error, ", "")
+    return JSONResponse(
+        status_code=422,
+        content={"detail": {"code": code}},
+    )
 
 app.mount("/media", StaticFiles(directory="media"), name="media")
 
