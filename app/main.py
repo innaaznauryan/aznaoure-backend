@@ -55,3 +55,7 @@ app.include_router(addresses.router, prefix="/api/addresses", tags=["Addresses"]
 @app.get("/")
 def root():
     return {"message": "Jewelry Shop API is running 💍"}
+
+@app.api_route("/health", methods=["GET", "HEAD"])
+def health_check():
+    return {"status": "ok"}
