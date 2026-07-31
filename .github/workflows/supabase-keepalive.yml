@@ -1,0 +1,31 @@
+name: Supabase Keep-Alive
+
+on:
+  schedule:
+    - cron: "0 6 */2 * *"
+  workflow_dispatch: {}
+
+jobs:
+  ping-main:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping Main
+        run: |
+          response=$(curl -s -o /dev/null -w "%{http_code}" \
+            -X GET "${{ secrets.SUPABASE_URL_MAIN }}/rest/v1/products?select=id&limit=1" \
+            -H "apikey: ${{ secrets.SUPABASE_SERVICE_KEY_MAIN }}" \
+            -H "Authorization: Bearer ${{ secrets.SUPABASE_SERVICE_KEY_MAIN }}")
+          echo "Main HTTP status: $response"
+          if [ "$response" -ge 400 ]; then exit 1; fi
+
+  ping-dev:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping Dev
+        run: |
+          response=$(curl -s -o /dev/null -w "%{http_code}" \
+            -X GET "${{ secrets.SUPABASE_URL_DEV }}/rest/v1/products?select=id&limit=1" \
+            -H "apikey: ${{ secrets.SUPABASE_SERVICE_KEY_DEV }}" \
+            -H "Authorization: Bearer ${{ secrets.SUPABASE_SERVICE_KEY_DEV }}")
+          echo "Dev HTTP status: $response"
+          if [ "$response" -ge 400 ]; then exit 1; fi
