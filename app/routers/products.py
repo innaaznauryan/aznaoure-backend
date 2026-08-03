@@ -2,6 +2,8 @@ from fastapi import APIRouter, Depends, HTTPException, Query, status
 from sqlalchemy.orm import Session
 
 from app.database import get_db
+from app.auth.admin import get_current_admin
+from app.models.user import User
 from app.repositories.product_repository import ProductRepository
 from app.schemas.product import ProductCategory, ProductCreate, ProductResponse, ProductUpdate
 
@@ -41,6 +43,7 @@ def get_product(
 def create_product(
     product_data: ProductCreate,
     repo: ProductRepository = Depends(get_product_repository),
+    current_user: User = Depends(get_current_admin),
 ):
     if repo.get_by_id(product_data.id):
         raise HTTPException(
@@ -55,6 +58,7 @@ def update_product(
     product_id: str,
     product_data: ProductUpdate,
     repo: ProductRepository = Depends(get_product_repository),
+    current_user: User = Depends(get_current_admin),
 ):
     product = repo.get_by_id(product_id)
     if not product:
@@ -69,6 +73,7 @@ def update_product(
 def delete_product(
     product_id: str,
     repo: ProductRepository = Depends(get_product_repository),
+    current_user: User = Depends(get_current_admin),
 ):
     product = repo.get_by_id(product_id)
     if not product:

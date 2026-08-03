@@ -13,6 +13,9 @@ class UserRepository:
     def get_by_google_id(self, google_id: str) -> User | None:
         return self.db.query(User).filter(User.google_id == google_id).first()
 
+    def get_by_id(self, user_id: int) -> User | None:
+        return self.db.query(User).filter(User.id == user_id).first()
+
     def create(
         self,
         email: str,
