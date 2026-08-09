@@ -26,4 +26,3 @@ class Product(Base):
     details: Mapped[list] = mapped_column(JSON, nullable=False, default=list)
     available: Mapped[bool] = mapped_column(Boolean, default=True, nullable=False)
     featured: Mapped[bool] = mapped_column(Boolean, default=False, nullable=False)
-    favorite: Mapped[bool] = mapped_column(Boolean, default=False, nullable=False)

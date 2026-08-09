@@ -38,7 +38,6 @@ class ProductRepository:
             details=[item.model_dump() for item in product_data.details],
             available=product_data.available,
             featured=product_data.featured,
-            favorite=product_data.favorite,
         )
         self.db.add(product)
         self.db.commit()
@@ -72,7 +71,6 @@ class ProductRepository:
                 details=item["details"],
                 available=item["available"],
                 featured=item.get("featured", False),
-                favorite=item.get("favorite", False),
             )
             self.db.add(product)
 

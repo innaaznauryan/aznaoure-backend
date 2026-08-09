@@ -25,7 +25,6 @@ class ProductCreate(BaseModel):
     description: TranslatedString
     details: list[TranslatedString] = Field(default_factory=list)
     featured: bool = False
-    favorite: bool = False
 
 
 class ProductUpdate(BaseModel):
@@ -36,7 +35,6 @@ class ProductUpdate(BaseModel):
     description: TranslatedString | None = None
     details: list[TranslatedString] | None = None
     featured: bool | None = None
-    favorite: bool | None = None
 
 
 class ProductResponse(BaseModel):
@@ -51,4 +49,3 @@ class ProductResponse(BaseModel):
     details: list[TranslatedString]
     available: bool
     featured: bool
-    favorite: bool
