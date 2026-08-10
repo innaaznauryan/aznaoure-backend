@@ -33,6 +33,25 @@ class UserSignup(BaseModel):
             raise ValueError("invalidPhone")
         return v
 
+class UserUpdate(BaseModel):
+    first_name: str | None = None
+    last_name: str | None = None
+    phone: str | None = None
+
+    @field_validator("first_name", "last_name")
+    @classmethod
+    def not_blank(cls, v: str | None) -> str | None:
+        if v is not None and not v.strip():
+            raise ValueError("required")
+        return v
+
+    @field_validator("phone")
+    @classmethod
+    def valid_phone(cls, v: str | None) -> str | None:
+        if v is not None and v.strip() != "" and not PHONE_REGEX.match(v):
+            raise ValueError("invalidPhone")
+        return v
+
 class UserLogin(BaseModel):
     email: EmailStr
     password: str

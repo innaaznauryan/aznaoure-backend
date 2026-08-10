@@ -38,6 +38,13 @@ class UserRepository:
         self.db.refresh(user)
         return user
 
+    def update(self, user: User, data: dict) -> User:
+        for field, value in data.items():
+            setattr(user, field, value)
+        self.db.commit()
+        self.db.refresh(user)
+        return user
+
     def link_google_id(self, user: User, google_id: str) -> User:
         user.google_id = google_id
         self.db.commit()
