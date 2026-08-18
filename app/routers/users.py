@@ -10,6 +10,12 @@ from app.schemas.user import UserUpdate, UserOut
 router = APIRouter()
 
 
+@router.get("/me", response_model=UserOut)
+def read_me(
+    current_user: User = Depends(get_current_user),
+):
+    return UserOut.model_validate(current_user)
+
 @router.patch("/me", response_model=UserOut)
 def update_me(
     payload: UserUpdate,
