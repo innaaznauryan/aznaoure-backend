@@ -1,5 +1,5 @@
 import os
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, BackgroundTasks
 from sqlalchemy.orm import Session
 from passlib.context import CryptContext
 from google.oauth2 import id_token
@@ -7,7 +7,9 @@ from google.auth.transport import requests as google_requests
 
 from app.database import get_db
 from app.repositories.user_repository import UserRepository
-from app.schemas.user import UserSignup, UserLogin, GoogleAuthRequest, AuthResponse, UserOut
+from app.core.security import create_password_reset_token, verify_password_reset_token
+from app.schemas.user import UserSignup, UserLogin, GoogleAuthRequest, AuthResponse, UserOut, ForgotPasswordRequest, ResetPasswordRequest
+from app.utils.email_utils import send_password_reset_email
 from app.utils.auth_utils import create_access_token
 
 router = APIRouter()
@@ -82,3 +84,29 @@ def google_auth(payload: GoogleAuthRequest, db: Session = Depends(get_db)):
 
     access_token = create_access_token(data={"sub": str(user.id)})
     return AuthResponse(access_token=access_token, user=UserOut.model_validate(user))
+
+
+@router.post("/forgot-password")
+def forgot_password(payload: ForgotPasswordRequest, background_tasks: BackgroundTasks, db: Session = Depends(get_db)):
+    repo = UserRepository(db)
+    user = repo.get_by_email(payload.email)
+    if user:
+        token = create_password_reset_token(user.id)
+        background_tasks.add_task(send_password_reset_email, user.email, token)
+    return {"message": "If an account exists with that email, a reset link has been sent."}
+
+
+@router.post("/reset-password")
+def reset_password(payload: ResetPasswordRequest, db: Session = Depends(get_db)):
+    user_id = verify_password_reset_token(payload.token)
+    if not user_id:
+        raise HTTPException(status_code=400, detail={"code": "invalid_reset_token"})
+
+    repo = UserRepository(db)
+    user = repo.get_by_id(user_id)
+    if not user:
+        raise HTTPException(status_code=400, detail={"code": "invalid_reset_token"})
+
+    hashed_password = pwd_context.hash(payload.new_password)
+    repo.update(user, {"hashed_password": hashed_password})
+    return {"message": "Password updated successfully"}
