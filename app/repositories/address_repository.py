@@ -15,6 +15,13 @@ class AddressRepository:
             .all()
         )
 
+    def get_by_id(self, id: int, user_id: int) -> Address | None:
+        return (
+            self.db.query(Address)
+            .filter(Address.id == id, Address.user_id == user_id)
+            .first()
+        )
+
     def create(self, user_id: int, address_data: AddressCreate) -> Address:
         if address_data.is_default:
             self._unset_default(user_id)
