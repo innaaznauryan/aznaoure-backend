@@ -24,6 +24,7 @@ class ProductCreate(BaseModel):
     image: str = Field(..., min_length=1, max_length=255)
     description: TranslatedString
     details: list[TranslatedString] = Field(default_factory=list)
+    available: bool = True
     featured: bool = False
 
 
@@ -34,6 +35,7 @@ class ProductUpdate(BaseModel):
     image: str | None = Field(default=None, min_length=1, max_length=255)
     description: TranslatedString | None = None
     details: list[TranslatedString] | None = None
+    available: bool | None = None
     featured: bool | None = None
 
 
