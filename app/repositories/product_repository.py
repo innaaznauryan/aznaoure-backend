@@ -69,7 +69,7 @@ class ProductRepository:
                 image=item["image"],
                 description=item["description"],
                 details=item["details"],
-                available=item["available"],
+                available=item.get("available", 0),
                 featured=item.get("featured", False),
             )
             self.db.add(product)

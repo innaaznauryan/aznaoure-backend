@@ -16,16 +16,19 @@ class TranslatedString(BaseModel):
     hy: str
 
 
-class ProductCreate(BaseModel):
-    id: str = Field(..., min_length=1, max_length=100)
+class ProductBase(BaseModel):
     name: TranslatedString
     price: int = Field(..., ge=0)
     category: ProductCategory
     image: str = Field(..., min_length=1, max_length=255)
     description: TranslatedString
     details: list[TranslatedString] = Field(default_factory=list)
-    available: bool = True
+    available: int = Field(default=0, ge=0)
     featured: bool = False
+
+
+class ProductCreate(ProductBase):
+    id: str = Field(..., min_length=1, max_length=100)
 
 
 class ProductUpdate(BaseModel):
@@ -35,19 +38,11 @@ class ProductUpdate(BaseModel):
     image: str | None = Field(default=None, min_length=1, max_length=255)
     description: TranslatedString | None = None
     details: list[TranslatedString] | None = None
-    available: bool | None = None
+    available: int | None = Field(default=None, ge=0)
     featured: bool | None = None
 
 
-class ProductResponse(BaseModel):
+class ProductResponse(ProductBase):
     model_config = ConfigDict(from_attributes=True)
 
     id: str
-    name: TranslatedString
-    price: int
-    category: ProductCategory
-    image: str
-    description: TranslatedString
-    details: list[TranslatedString]
-    available: bool
-    featured: bool

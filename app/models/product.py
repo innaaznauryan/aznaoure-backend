@@ -24,5 +24,5 @@ class Product(Base):
     image: Mapped[str] = mapped_column(String(255), nullable=False)
     description: Mapped[dict] = mapped_column(JSON, nullable=False)
     details: Mapped[list] = mapped_column(JSON, nullable=False, default=list)
-    available: Mapped[bool] = mapped_column(Boolean, default=True, nullable=False)
+    available: Mapped[int] = mapped_column(Integer, nullable=False, default=0)
     featured: Mapped[bool] = mapped_column(Boolean, default=False, nullable=False)
