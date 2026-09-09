@@ -13,6 +13,7 @@ class Settings:
     RESET_TOKEN_EXPIRE_MINUTES: int = int(os.getenv("RESET_TOKEN_EXPIRE_MINUTES", "30"))
     RESEND_API_KEY: str = os.getenv("RESEND_API_KEY", "")
     ALLOWED_ORIGINS: str = os.getenv("ALLOWED_ORIGINS", "")
+    GEMINI_API_KEY: str = os.getenv("GEMINI_API_KEY", "")
 
     @property
     def FRONTEND_URL(self) -> str:

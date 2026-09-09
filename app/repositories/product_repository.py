@@ -1,3 +1,4 @@
+from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from app.models.product import Product, ProductCategory
@@ -55,6 +56,22 @@ class ProductRepository:
     def delete(self, product: Product) -> None:
         self.db.delete(product)
         self.db.commit()
+
+    def update_embedding(self, product_id: str, embedding: list[float]) -> None:
+        product = self.db.get(Product, product_id)
+        if product is None:
+            return
+        product.embedding = embedding
+        self.db.commit()
+
+    def semantic_search(self, query_embedding: list[float], limit: int = 10) -> list[Product]:
+        stmt = (
+            select(Product)
+            .where(Product.embedding.is_not(None))
+            .order_by(Product.embedding.cosine_distance(query_embedding))
+            .limit(limit)
+        )
+        return list(self.db.execute(stmt).scalars())
 
     def seed_if_empty(self, products_data: list[dict]) -> None:
         if self.db.query(Product).count() > 0:

@@ -2,6 +2,7 @@ import enum
 
 from sqlalchemy import Boolean, Enum, Integer, JSON, String
 from sqlalchemy.orm import Mapped, mapped_column
+from pgvector.sqlalchemy import Vector
 
 from app.database import Base
 
@@ -26,3 +27,4 @@ class Product(Base):
     details: Mapped[list] = mapped_column(JSON, nullable=False, default=list)
     available: Mapped[int] = mapped_column(Integer, nullable=False, default=0)
     featured: Mapped[bool] = mapped_column(Boolean, default=False, nullable=False)
+    embedding: Mapped[list[float] | None] = mapped_column(Vector(768), nullable=True)

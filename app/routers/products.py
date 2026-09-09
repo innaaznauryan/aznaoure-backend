@@ -6,6 +6,7 @@ from app.auth.admin import get_current_admin
 from app.models.user import User
 from app.repositories.product_repository import ProductRepository
 from app.schemas.product import ProductCategory, ProductCreate, ProductResponse, ProductUpdate
+from app.services.embeddings import embed_text
 
 router = APIRouter()
 
@@ -23,6 +24,16 @@ def list_products(
     repo: ProductRepository = Depends(get_product_repository),
 ):
     return repo.get_all(skip=skip, limit=limit, category=category, featured=featured)
+
+
+@router.get("/search", response_model=list[ProductResponse])
+def search_products(
+    q: str,
+    limit: int = 10,
+    repo: ProductRepository = Depends(get_product_repository),
+):
+    query_embedding = embed_text(q)
+    return repo.semantic_search(query_embedding, limit=limit)
 
 
 @router.get("/{product_id}", response_model=ProductResponse)
