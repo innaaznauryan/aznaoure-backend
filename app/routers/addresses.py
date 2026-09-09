@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 
 from app.database import get_db
-from app.auth.dependencies import get_current_user
+from app.auth.user import get_current_user
 from app.models.user import User
 from app.repositories.address_repository import AddressRepository
 from app.schemas.address import AddressCreate, AddressResponse

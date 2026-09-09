@@ -10,7 +10,7 @@ from app.repositories.user_repository import UserRepository
 from app.core.security import create_password_reset_token, verify_password_reset_token
 from app.schemas.user import UserSignup, UserLogin, GoogleAuthRequest, AuthResponse, UserOut, ForgotPasswordRequest, ResetPasswordRequest
 from app.utils.email_utils import send_password_reset_email
-from app.utils.auth_utils import create_access_token
+from app.core.security import create_access_token
 
 router = APIRouter()
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")

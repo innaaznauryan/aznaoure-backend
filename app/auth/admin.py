@@ -1,7 +1,7 @@
 import os
 from fastapi import Depends, HTTPException, status
 
-from app.auth.dependencies import get_current_user
+from app.auth.user import get_current_user
 from app.models.user import User
 
 ADMIN_EMAIL = os.environ["ADMIN_EMAIL"]
