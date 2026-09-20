@@ -44,5 +44,15 @@ class ProductUpdate(BaseModel):
 
 class ProductResponse(ProductBase):
     model_config = ConfigDict(from_attributes=True)
-
     id: str
+
+
+class ProductSearchResponse(BaseModel):
+    results: list[ProductResponse]
+    semantic: bool
+    semantic_remaining: int
+
+
+class SemanticSearchQuota(BaseModel):
+    remaining: int
+    limit: int

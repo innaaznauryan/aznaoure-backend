@@ -1,4 +1,4 @@
-from sqlalchemy import select
+from sqlalchemy import select, or_
 from sqlalchemy.orm import Session
 
 from app.models.product import Product, ProductCategory
@@ -69,6 +69,20 @@ class ProductRepository:
             select(Product)
             .where(Product.embedding.is_not(None))
             .order_by(Product.embedding.cosine_distance(query_embedding))
+            .limit(limit)
+        )
+        return list(self.db.execute(stmt).scalars())
+
+    def keyword_search(self, query: str, limit: int = 10) -> list[Product]:
+        pattern = f"%{query}%"
+        stmt = (
+            select(Product)
+            .where(
+                or_(
+                    Product.name.op("->>")("en").ilike(pattern),
+                    Product.name.op("->>")("hy").ilike(pattern),
+                )
+            )
             .limit(limit)
         )
         return list(self.db.execute(stmt).scalars())

@@ -1,5 +1,7 @@
+from datetime import date
 from sqlalchemy.orm import Session
 
+from app.core.config import settings
 from app.models.user import User
 
 
@@ -50,3 +52,24 @@ class UserRepository:
         self.db.commit()
         self.db.refresh(user)
         return user
+
+    @staticmethod
+    def can_use_semantic_search(user: User) -> bool:
+        if user.semantic_search_date != date.today():
+            return True
+        return user.semantic_search_count < settings.DAILY_SEMANTIC_SEARCH_LIMIT
+
+    def increment_semantic_search_count(self, user: User) -> None:
+        today = date.today()
+        if user.semantic_search_date != today:
+            user.semantic_search_count = 1
+            user.semantic_search_date = today
+        else:
+            user.semantic_search_count += 1
+        self.db.commit()
+
+    @staticmethod
+    def semantic_searches_remaining(user: User) -> int:
+        if user.semantic_search_date != date.today():
+            return settings.DAILY_SEMANTIC_SEARCH_LIMIT
+        return max(0, settings.DAILY_SEMANTIC_SEARCH_LIMIT - user.semantic_search_count)

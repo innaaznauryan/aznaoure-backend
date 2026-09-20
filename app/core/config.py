@@ -14,6 +14,7 @@ class Settings:
     RESEND_API_KEY: str = os.getenv("RESEND_API_KEY", "")
     ALLOWED_ORIGINS: str = os.getenv("ALLOWED_ORIGINS", "")
     GEMINI_API_KEY: str = os.getenv("GEMINI_API_KEY", "")
+    DAILY_SEMANTIC_SEARCH_LIMIT: int = int(os.getenv("DAILY_SEMANTIC_SEARCH_LIMIT", "5"))
 
     @property
     def FRONTEND_URL(self) -> str:

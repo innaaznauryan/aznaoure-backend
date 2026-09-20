@@ -1,11 +1,21 @@
 from fastapi import APIRouter, Depends, HTTPException, Query, status
 from sqlalchemy.orm import Session
 
+from app.core.config import settings
 from app.database import get_db
+from app.auth.user import get_current_user
 from app.auth.admin import get_current_admin
 from app.models.user import User
 from app.repositories.product_repository import ProductRepository
-from app.schemas.product import ProductCategory, ProductCreate, ProductResponse, ProductUpdate
+from app.repositories.user_repository import UserRepository
+from app.schemas.product import (
+    ProductCategory,
+    ProductCreate,
+    ProductResponse,
+    ProductUpdate,
+    ProductSearchResponse,
+    SemanticSearchQuota
+)
 from app.services.embeddings import embed_text
 
 router = APIRouter()
@@ -13,6 +23,9 @@ router = APIRouter()
 
 def get_product_repository(db: Session = Depends(get_db)) -> ProductRepository:
     return ProductRepository(db)
+
+def get_user_repository(db: Session = Depends(get_db)) -> UserRepository:
+    return UserRepository(db)
 
 
 @router.get("/", response_model=list[ProductResponse])
@@ -26,14 +39,40 @@ def list_products(
     return repo.get_all(skip=skip, limit=limit, category=category, featured=featured)
 
 
-@router.get("/search", response_model=list[ProductResponse])
+@router.get("/search/quota", response_model=SemanticSearchQuota)
+def get_search_quota(
+    user_repo: UserRepository = Depends(get_user_repository),
+    current_user: User = Depends(get_current_user),
+):
+    return SemanticSearchQuota(
+        remaining=user_repo.semantic_searches_remaining(current_user),
+        limit=settings.DAILY_SEMANTIC_SEARCH_LIMIT,
+    )
+
+
+@router.get("/search", response_model=ProductSearchResponse)
 def search_products(
     q: str,
     limit: int = 10,
     repo: ProductRepository = Depends(get_product_repository),
+    user_repo: UserRepository = Depends(get_user_repository),
+    current_user: User = Depends(get_current_user),
 ):
-    query_embedding = embed_text(q)
-    return repo.semantic_search(query_embedding, limit=limit)
+    if user_repo.can_use_semantic_search(current_user):
+        try:
+            query_embedding = embed_text(q)
+            products = repo.semantic_search(query_embedding, limit=limit)
+            results = [ProductResponse.model_validate(p) for p in products]
+            user_repo.increment_semantic_search_count(current_user)
+            remaining = user_repo.semantic_searches_remaining(current_user)
+            return ProductSearchResponse(results=results, semantic=True, semantic_remaining=remaining)
+        except Exception:
+            print("Semantic search unavailable for query %r, using keyword fallback", q)
+
+    products = repo.keyword_search(q, limit=limit)
+    results = [ProductResponse.model_validate(p) for p in products]
+    remaining = user_repo.semantic_searches_remaining(current_user)
+    return ProductSearchResponse(results=results, semantic=False, semantic_remaining=remaining)
 
 
 @router.get("/{product_id}", response_model=ProductResponse)
