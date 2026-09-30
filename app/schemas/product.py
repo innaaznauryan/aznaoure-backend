@@ -9,6 +9,7 @@ class ProductCategory(str, Enum):
     earrings = "earrings"
     bracelets = "bracelets"
     brooches = "brooches"
+    others = "others"
 
 
 class TranslatedString(BaseModel):

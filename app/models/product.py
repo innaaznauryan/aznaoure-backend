@@ -13,6 +13,7 @@ class ProductCategory(str, enum.Enum):
     earrings = "earrings"
     bracelets = "bracelets"
     brooches = "brooches"
+    others = "others"
 
 
 class Product(Base):
