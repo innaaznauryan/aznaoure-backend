@@ -9,9 +9,9 @@ from fastapi.responses import JSONResponse
 
 from app.data.product_seed import PRODUCTS_SEED
 from app.database import Base, SessionLocal, engine
-from app.models import Order, OrderItem, Product  # noqa: F401
+from app.models import CartItem, Order, OrderItem, Product  # noqa: F401
 from app.repositories.product_repository import ProductRepository
-from app.routers import auth, orders, products, addresses, favorites, users
+from app.routers import auth, orders, products, addresses, favorites, users, cart
 
 @asynccontextmanager
 async def lifespan(_app: FastAPI):
@@ -53,6 +53,7 @@ app.include_router(orders.router, prefix="/api/orders", tags=["Orders"])
 app.include_router(addresses.router, prefix="/api/addresses", tags=["Addresses"])
 app.include_router(favorites.router, prefix="/api/favorites", tags=["Favorites"])
 app.include_router(users.router, prefix="/api/users", tags=["Users"])
+app.include_router(cart.router, prefix="/api/cart", tags=["Cart"])
 
 @app.get("/")
 def root():

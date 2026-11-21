@@ -79,10 +79,10 @@ Database url is expected to be reachable at `DATABASE_URL`.
 ### Authorization
 - Protected routes require a valid JWT via `get_current_user`.
 - Admin-only product mutations are gated by `get_current_admin`, which checks the authenticated user's email against the `ADMIN_EMAIL` env var.
-- Orders, addresses, and favorites are scoped to the authenticated user through the JWT - never through query params.
+- Orders, addresses, favorites, and cart items are scoped to the authenticated user through the JWT - never through query params.
 
 ### Database Schema
-- Tables: `products`, `orders`, `order_items`, `users`, `addresses`, `favorites`.
+- Tables: `products`, `orders`, `order_items`, `users`, `addresses`, `favorites`, `cart_items`.
 
 ## Database Migrations
 

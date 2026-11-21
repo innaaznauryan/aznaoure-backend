@@ -9,6 +9,7 @@ from app.database import Base
 from app.models.product import Product
 from app.models.user import User
 from app.models.address import Address
+from app.models.cart import CartItem
 
 load_dotenv()
 
