@@ -41,12 +41,16 @@ pip install -r requirements.txt
 Create an `.env` file in the project root, using the configs below as a reference:
 
 ```env
-ACCESS_TOKEN_EXPIRE_MINUTES=60
+ACCESS_TOKEN_EXPIRE_MINUTES=15
+REFRESH_TOKEN_EXPIRE_DAYS=7
+RESET_TOKEN_EXPIRE_MINUTES=15
+RESEND_API_KEY=your-resend-api-key
 ADMIN_EMAIL=admin@domain.com
 ALGORITHM=HS256
 ALLOWED_ORIGINS=http://localhost:8080
 DATABASE_URL=postgresql://user:password@host:port/dbname
 GOOGLE_CLIENT_ID=xxxx...apps.googleusercontent.com
+GEMINI_API_KEY=your-gemini-api-key
 SECRET_KEY=your-jwt-secret-key
 ```
 
@@ -74,6 +78,8 @@ Database url is expected to be reachable at `DATABASE_URL`.
 ### Authentication
 - Email/password and Google OAuth sign-in, with Google accounts linking to existing password accounts by email match.
 - `hashed_password` is nullable to support Google-only accounts.
+- Sign-in and signup return an access token and a refresh token. Send the access token as a bearer token; when it expires, post `{"refresh_token": "..."}` to `/api/auth/refresh` to get a new access token.
+- Access tokens expire according to `ACCESS_TOKEN_EXPIRE_MINUTES` (default: 15 minutes); refresh tokens expire according to `REFRESH_TOKEN_EXPIRE_DAYS` (default: 7 days).
 - JWT-based session handling, decoded via a shared `get_current_user` dependency.
 
 ### Authorization

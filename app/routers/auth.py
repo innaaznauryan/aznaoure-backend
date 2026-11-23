@@ -8,14 +8,15 @@ from google.auth.transport import requests as google_requests
 from app.database import get_db
 from app.repositories.user_repository import UserRepository
 from app.core.security import create_password_reset_token, verify_password_reset_token
-from app.schemas.user import UserSignup, UserLogin, GoogleAuthRequest, AuthResponse, UserOut, ForgotPasswordRequest, ResetPasswordRequest
+from app.core.security import create_access_token, create_refresh_token, verify_refresh_token
+from app.core.config import settings
+from app.schemas.user import UserSignup, UserLogin, GoogleAuthRequest, AuthResponse, UserOut, ForgotPasswordRequest, ResetPasswordRequest, RefreshTokenRequest, TokenRefreshResponse
 from app.utils.email_utils import send_password_reset_email
-from app.core.security import create_access_token
 
 router = APIRouter()
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
-GOOGLE_CLIENT_ID = os.getenv("GOOGLE_CLIENT_ID")
+GOOGLE_CLIENT_ID = settings.GOOGLE_CLIENT_ID
 if not GOOGLE_CLIENT_ID:
     raise RuntimeError("GOOGLE_CLIENT_ID environment variable is not set")
 
@@ -37,7 +38,8 @@ def signup(payload: UserSignup, db: Session = Depends(get_db)):
     )
 
     access_token = create_access_token(data={"sub": str(user.id)})
-    return AuthResponse(access_token=access_token, user=UserOut.model_validate(user))
+    refresh_token = create_refresh_token(user.id)
+    return AuthResponse(access_token=access_token, refresh_token=refresh_token, user=UserOut.model_validate(user))
 
 
 @router.post("/login", response_model=AuthResponse)
@@ -49,7 +51,8 @@ def login(payload: UserLogin, db: Session = Depends(get_db)):
         raise HTTPException(status_code=401, detail={"code": "invalid_credentials"})
 
     access_token = create_access_token(data={"sub": str(user.id)})
-    return AuthResponse(access_token=access_token, user=UserOut.model_validate(user))
+    refresh_token = create_refresh_token(user.id)
+    return AuthResponse(access_token=access_token, refresh_token=refresh_token, user=UserOut.model_validate(user))
 
 
 @router.post("/google", response_model=AuthResponse)
@@ -83,7 +86,18 @@ def google_auth(payload: GoogleAuthRequest, db: Session = Depends(get_db)):
             )
 
     access_token = create_access_token(data={"sub": str(user.id)})
-    return AuthResponse(access_token=access_token, user=UserOut.model_validate(user))
+    refresh_token = create_refresh_token(user.id)
+    return AuthResponse(access_token=access_token, refresh_token=refresh_token, user=UserOut.model_validate(user))
+
+
+@router.post("/refresh", response_model=TokenRefreshResponse)
+def refresh_access_token(payload: RefreshTokenRequest, db: Session = Depends(get_db)):
+    user_id = verify_refresh_token(payload.refresh_token)
+    if user_id is None or not UserRepository(db).get_by_id(user_id):
+        raise HTTPException(status_code=401, detail={"code": "invalid_refresh_token"})
+
+    access_token = create_access_token(data={"sub": str(user_id)})
+    return TokenRefreshResponse(access_token=access_token)
 
 
 @router.post("/forgot-password")
